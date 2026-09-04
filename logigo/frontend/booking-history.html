@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking History | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="driver-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🚚 LogiGo <span class="muted" style="font-size:12px;">Customer</span></div>
+    <nav class="sidebar-nav">
+      <a href="customer-dashboard.html">📊 Dashboard</a>
+      <a href="book-transport.html">📦 Book Transport</a>
+      <a href="my-bookings.html">🧾 My Bookings</a>
+      <a href="booking-history.html" class="active">🕘 Booking History</a>
+      <a href="customer-profile.html">👤 My Profile</a>
+      <a href="customer-notifications.html">🔔 Notifications</a>
+      <a href="customer-settings.html">⚙️ Settings</a>
+      <a href="#" id="logoutLink">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-header">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+      <h2>Booking History</h2>
+    </div>
+
+    <div class="card mt-24">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <input type="text" id="searchInput" placeholder="Search by pickup, destination or booking ID" style="flex:1; min-width:220px; padding:8px 12px; border:1px solid var(--border); border-radius:6px;">
+        <select id="statusFilter" style="padding:8px 12px; border:1px solid var(--border); border-radius:6px;">
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="assigned">Confirmed/Assigned</option>
+          <option value="accepted">Accepted</option>
+          <option value="picked_up">Picked Up</option>
+          <option value="in_transit">In Transit</option>
+          <option value="delivered">Completed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <input type="date" id="dateFilter" style="padding:8px 12px; border:1px solid var(--border); border-radius:6px;">
+        <button class="btn btn-outline btn-sm" onclick="resetFilters()">Reset</button>
+      </div>
+    </div>
+
+    <div id="historyList" class="mt-24"></div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/booking-history.js"></script>
+<script>
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🚚 LogiGo</div>
+  <nav>
+    <a href="customer-dashboard.html">Dashboard</a>
+    <a href="book-transport.html">Book Transport</a>
+    <a href="my-bookings.html">My Bookings</a>
+    <a href="#" id="logoutLink">Logout</a>
+  </nav>
+</div>
+
+<div class="container" style="max-width: 520px;">
+  <div class="card text-center">
+    <h2>✅ Booking Confirmed!</h2>
+    <p class="muted mt-16">Your transport request has been placed. An admin will assign a driver shortly.</p>
+
+    <div id="bookingSummary" class="mt-24" style="text-align:left;"></div>
+
+    <a href="my-bookings.html" class="btn btn-primary mt-24">View My Bookings</a>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  requireAuth('customer');
+  document.getElementById('logoutLink').addEventListener('click', logout);
+
+  const raw = sessionStorage.getItem('lastBooking');
+  if (raw) {
+    const b = JSON.parse(raw);
+    document.getElementById('bookingSummary').innerHTML = `
+      <p><strong>Booking ID:</strong> #${b.id}</p>
+      <p><strong>Pickup:</strong> ${b.pickup_location}</p>
+      <p><strong>Delivery:</strong> ${b.delivery_location}</p>
+      <p><strong>Vehicle:</strong> ${b.vehicle_type.replace('_',' ')}</p>
+      <p><strong>Estimated Price:</strong> ₹${b.estimated_price}</p>
+      <p><strong>Status:</strong> ${b.status}</p>
+    `;
+  }
+</script>
+</body>
+</html>

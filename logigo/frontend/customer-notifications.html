@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="driver-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🚚 LogiGo <span class="muted" style="font-size:12px;">Customer</span></div>
+    <nav class="sidebar-nav">
+      <a href="customer-dashboard.html">📊 Dashboard</a>
+      <a href="book-transport.html">📦 Book Transport</a>
+      <a href="my-bookings.html">🧾 My Bookings</a>
+      <a href="booking-history.html">🕘 Booking History</a>
+      <a href="customer-profile.html">👤 My Profile</a>
+      <a href="customer-notifications.html" class="active">🔔 Notifications</a>
+      <a href="customer-settings.html">⚙️ Settings</a>
+      <a href="#" id="logoutLink">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-header">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+      <h2>Notifications</h2>
+    </div>
+
+    <div id="notificationsList" class="mt-24"></div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/customer-notifications.js"></script>
+<script>
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

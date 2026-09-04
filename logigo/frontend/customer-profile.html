@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="driver-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🚚 LogiGo <span class="muted" style="font-size:12px;">Customer</span></div>
+    <nav class="sidebar-nav">
+      <a href="customer-dashboard.html">📊 Dashboard</a>
+      <a href="book-transport.html">📦 Book Transport</a>
+      <a href="my-bookings.html">🧾 My Bookings</a>
+      <a href="booking-history.html">🕘 Booking History</a>
+      <a href="customer-profile.html" class="active">👤 My Profile</a>
+      <a href="customer-notifications.html">🔔 Notifications</a>
+      <a href="customer-settings.html">⚙️ Settings</a>
+      <a href="#" id="logoutLink">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-header">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+      <h2>My Profile</h2>
+    </div>
+
+    <div id="profileView" class="mt-24"></div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/customer-profile.js"></script>
+<script>
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a { color: var(--primary); text-decoration: none; }
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.navbar .logo { font-size: 22px; font-weight: 700; color: var(--primary); }
+.navbar nav a { margin-left: 22px; font-weight: 500; color: var(--text); }
+.navbar nav a:hover { color: var(--primary); }
+
+/* ---------------- Layout ---------------- */
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.grid { display: grid; gap: 20px; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* ---------------- Hero ---------------- */
+.hero {
+  text-align: center;
+  padding: 70px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+.hero h1 { font-size: 40px; margin-bottom: 12px; }
+.hero p { font-size: 18px; opacity: 0.9; margin-bottom: 26px; }
+
+/* ---------------- Forms ---------------- */
+.form-group { margin-bottom: 16px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ---------------- Buttons ---------------- */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+
+/* ---------------- Badges (status) ---------------- */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.badge-pending { background: #fef3c7; color: #92400e; }
+.badge-assigned { background: #dbeafe; color: #1e40af; }
+.badge-accepted { background: #e0e7ff; color: #3730a3; }
+.badge-picked_up { background: #fae8ff; color: #86198f; }
+.badge-in_transit { background: #cffafe; color: #155e75; }
+.badge-delivered { background: #dcfce7; color: #166534; }
+.badge-rejected, .badge-cancelled { background: #fee2e2; color: #991b1b; }
+
+/* ---------------- Tables ---------------- */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+th { background: #f9fafb; font-weight: 600; color: var(--muted); }
+
+/* ---------------- Stat cards (admin dashboard) ---------------- */
+.stat-card { text-align: center; }
+.stat-card .value { font-size: 30px; font-weight: 700; color: var(--primary); }
+.stat-card .label { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+/* ---------------- Utility ---------------- */
+.text-center { text-align: center; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.muted { color: var(--muted); font-size: 14px; }
+.error-text { color: var(--danger); font-size: 13px; margin-top: 6px; }
+.success-text { color: var(--success); font-size: 13px; margin-top: 6px; }
+.footer { text-align: center; padding: 24px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ---------------- Driver/Sidebar Layout ---------------- */
+.driver-layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 230px;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+.sidebar-logo { font-size: 20px; font-weight: 700; color: var(--primary); padding: 0 20px 20px; }
+.sidebar-nav { display: flex; flex-direction: column; }
+.sidebar-nav a {
+  padding: 12px 20px;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+}
+.sidebar-nav a:hover { background: var(--bg); }
+.sidebar-nav a.active { background: #eff6ff; color: var(--primary); border-left-color: var(--primary); font-weight: 700; }
+
+.main-content { flex: 1; padding: 28px 32px; max-width: 1100px; }
+.top-header { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.hamburger { display: none; background: none; border: none; font-size: 22px; cursor: pointer; }
+
+.welcome-banner {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+.welcome-banner h2 { font-size: 22px; margin: 0; }
+.welcome-banner p { opacity: 0.9; margin-top: 4px; font-size: 14px; }
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--muted);
+}
+.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    transition: left 0.2s ease;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  .sidebar.open { left: 0; }
+  .hamburger { display: inline-block; }
+  .main-content { padding: 20px; }
+}

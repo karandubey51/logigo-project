@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="driver-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🚚 LogiGo <span class="muted" style="font-size:12px;">Driver</span></div>
+    <nav class="sidebar-nav">
+      <a href="driver-dashboard.html">📊 Dashboard</a>
+      <a href="driver-deliveries.html">📦 My Deliveries</a>
+      <a href="delivery-history.html">🕘 Delivery History</a>
+      <a href="driver-earnings.html">💰 Earnings</a>
+      <a href="driver-profile.html">👤 My Profile</a>
+      <a href="driver-notifications.html">🔔 Notifications</a>
+      <a href="driver-settings.html" class="active">⚙️ Settings</a>
+      <a href="#" id="logoutLink">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-header">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+      <h2>Settings</h2>
+    </div>
+
+    <form id="passwordForm" class="card mt-24" style="max-width:480px;">
+      <h3>Change Password</h3>
+      <div class="form-group mt-16">
+        <label>Current Password</label>
+        <input type="password" id="currentPassword" required>
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" id="newPassword" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password</label>
+        <input type="password" id="confirmPassword" required minlength="6">
+      </div>
+      <button type="submit" class="btn btn-primary mt-16">Update Password</button>
+      <p id="settingsMsg" class="mt-16"></p>
+    </form>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/driver-settings.js"></script>
+<script>
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

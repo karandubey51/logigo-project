@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🚚 LogiGo <span class="muted" style="font-size:13px;">Admin</span></div>
+  <nav>
+    <a href="#" id="logoutLink">Logout</a>
+  </nav>
+</div>
+
+<div class="container">
+  <h2>Dashboard</h2>
+  <div class="grid grid-3 mt-24" id="statsGrid"></div>
+
+  <div style="display:flex; gap:10px; margin: 30px 0 10px;">
+    <button class="btn btn-outline btn-sm tab-btn active" data-tab="bookings">All Bookings</button>
+    <button class="btn btn-outline btn-sm tab-btn" data-tab="customers">Customers</button>
+    <button class="btn btn-outline btn-sm tab-btn" data-tab="drivers">Drivers</button>
+    <button class="btn btn-outline btn-sm tab-btn" data-tab="pendingDrivers">
+      Pending Drivers <span id="pendingDriversBadge" style="display:none; background:#e74c3c; color:#fff; border-radius:50%; padding:2px 8px; font-size:12px; margin-left:4px;"></span>
+    </button>
+  </div>
+
+  <div id="bookingsTab" class="tab-panel"></div>
+  <div id="customersTab" class="tab-panel" style="display:none;"></div>
+  <div id="driversTab" class="tab-panel" style="display:none;"></div>
+  <div id="pendingDriversTab" class="tab-panel" style="display:none;"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

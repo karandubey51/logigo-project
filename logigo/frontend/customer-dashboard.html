@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="driver-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">🚚 LogiGo <span class="muted" style="font-size:12px;">Customer</span></div>
+    <nav class="sidebar-nav">
+      <a href="customer-dashboard.html" class="active">📊 Dashboard</a>
+      <a href="book-transport.html">📦 Book Transport</a>
+      <a href="my-bookings.html">🧾 My Bookings</a>
+      <a href="booking-history.html">🕘 Booking History</a>
+      <a href="customer-profile.html">👤 My Profile</a>
+      <a href="customer-notifications.html">🔔 Notifications</a>
+      <a href="customer-settings.html">⚙️ Settings</a>
+      <a href="#" id="logoutLink">🚪 Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-header">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+    </div>
+
+    <div class="welcome-banner">
+      <h2 id="welcomeText">Welcome back!</h2>
+      <p>Here's an overview of your bookings.</p>
+    </div>
+
+    <div class="grid grid-3" id="statsGrid"></div>
+
+    <div style="display:flex; gap:10px; margin: 30px 0 6px;">
+      <a href="book-transport.html" class="btn btn-primary btn-sm">📦 Book Transport</a>
+      <a href="my-bookings.html" class="btn btn-outline btn-sm">🧾 My Bookings</a>
+      <a href="booking-history.html" class="btn btn-outline btn-sm">🕘 Booking History</a>
+      <a href="customer-profile.html" class="btn btn-outline btn-sm">👤 My Profile</a>
+    </div>
+
+    <h3 class="mt-24" style="margin-bottom: 12px;">Active Booking</h3>
+    <div id="currentBooking"></div>
+
+    <h3 class="mt-24" style="margin-bottom: 12px;">Recent Bookings</h3>
+    <div id="recentBookings"></div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/customer-dashboard.js"></script>
+<script>
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+</script>
+</body>
+</html>
