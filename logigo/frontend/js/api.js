@@ -1,6 +1,6 @@
 // Shared API helper for all frontend pages.
 // Assumes the backend runs on the same host at port 5000.
-const API_BASE = 'https://logigo-project.onrender.com/api';
+const API_BASE = 'http://localhost:5000/api';
 
 function getToken() {
   return localStorage.getItem('logigo_token');
@@ -35,6 +35,17 @@ function requireAuth(role) {
   }
   return user;
 }
+
+// The browser's back/forward button can restore a page from its cache
+// (bfcache) WITHOUT re-running any of this page's checks or re-fetching
+// data -- so a logged-out or different-account page can flash briefly.
+// Forcing a real reload whenever that happens guarantees requireAuth()
+// and every data fetch on the page run fresh, every time.
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
 
 // Generic fetch wrapper that attaches the JWT and handles JSON
 async function apiRequest(path, { method = 'GET', body } = {}) {
