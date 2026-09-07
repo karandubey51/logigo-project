@@ -1,3 +1,20 @@
+// If already logged in, never show the login/register form again --
+// this also catches the browser Back button restoring this page from cache.
+function redirectIfLoggedIn() {
+  const user = getUser();
+  if (getToken() && user) {
+    if (user.role === 'customer') window.location.replace('customer-dashboard.html');
+    else if (user.role === 'driver') window.location.replace('driver-dashboard.html');
+    else window.location.replace('admin-dashboard.html');
+  }
+}
+redirectIfLoggedIn();
+// pageshow fires on normal load AND when the page is restored from the
+// browser's back/forward cache (event.persisted === true on back button)
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) redirectIfLoggedIn();
+});
+
 // ---------------- Login page ----------------
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
