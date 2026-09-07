@@ -83,7 +83,10 @@ async function login(req, res) {
     }
 
     if (role === 'driver' && user.approval_status !== 'approved') {
-      return res.status(403).json({ message: 'Your account is pending admin approval' });
+      if (user.approval_status === 'rejected') {
+        return res.status(403).json({ message: 'Your registration request was rejected by the admin.' });
+      }
+      return res.status(403).json({ message: 'Your account is pending admin approval. Please wait until it is approved.' });
     }
 
     const token = signToken(user.id, role);
