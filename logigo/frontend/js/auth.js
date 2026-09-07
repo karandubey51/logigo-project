@@ -1,5 +1,6 @@
 // If already logged in, never show the login/register form again --
-// this also catches the browser Back button restoring this page from cache.
+// on a normal page load. (Back-button/cache cases are now handled
+// centrally in api.js, which forces a fresh reload of this page too.)
 function redirectIfLoggedIn() {
   const user = getUser();
   if (getToken() && user) {
@@ -9,11 +10,6 @@ function redirectIfLoggedIn() {
   }
 }
 redirectIfLoggedIn();
-// pageshow fires on normal load AND when the page is restored from the
-// browser's back/forward cache (event.persisted === true on back button)
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted) redirectIfLoggedIn();
-});
 
 // ---------------- Login page ----------------
 const loginForm = document.getElementById('loginForm');
