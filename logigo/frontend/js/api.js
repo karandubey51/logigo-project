@@ -1,5 +1,4 @@
 // Shared API helper for all frontend pages.
-// Assumes the backend runs on the same host at port 5000.
 const API_BASE = 'https://logigo-project.onrender.com/api';
 
 function getToken() {
@@ -21,16 +20,20 @@ function clearSession() {
   localStorage.removeItem('logigo_user');
 }
 
+// replace() instead of href: this is a system-enforced redirect (not a
+// click the person made), so it should not add its own entry to the
+// browser's back/forward history -- otherwise every login/logout adds an
+// extra invisible "step" the Back button has to click through.
 function logout() {
   clearSession();
-  window.location.href = 'login.html';
+  window.location.replace('login.html');
 }
 
 // Redirects to login if not authenticated, or if role doesn't match
 function requireAuth(role) {
   const user = getUser();
   if (!getToken() || !user || (role && user.role !== role)) {
-    window.location.href = 'login.html';
+    window.location.replace('login.html');
     return null;
   }
   return user;
