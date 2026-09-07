@@ -1,6 +1,6 @@
 // Shared API helper for all frontend pages.
 // Assumes the backend runs on the same host at port 5000.
-const API_BASE = 'https://logigo-project.onrender.com';
+const API_BASE = 'https://logigo-project.onrender.com/api';
 
 function getToken() {
   return localStorage.getItem('logigo_token');
