@@ -1,6 +1,5 @@
 // Shared API helper for all frontend pages.
-const API_BASE = 'https://logigo-project.onrender.com/api';
-
+const API_BASE = 'http://13.203.199.237:5000/api';
 function getToken() {
   return localStorage.getItem('logigo_token');
 }
