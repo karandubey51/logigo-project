@@ -1,6 +1,5 @@
 // Shared API helper for all frontend pages.
-const API_BASE = 'http://13.203.199.237:5000/api';
-function getToken() {
+const API_BASE = 'https://logigokaranandakash.duckdns.org/api';
   return localStorage.getItem('logigo_token');
 }
 
