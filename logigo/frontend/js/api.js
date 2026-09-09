@@ -1,11 +1,24 @@
 // Shared API helper for all frontend pages.
 const API_BASE = 'https://logigokaranandakash.duckdns.org/api';
+
+function getToken() {
   return localStorage.getItem('logigo_token');
 }
 
+// If logigo_user ever holds corrupted/invalid JSON (e.g. leftover from
+// earlier testing), JSON.parse would throw and silently stop this whole
+// script from running further down the file -- including the code that
+// wires up the Login button. Treat bad data as "not logged in" instead.
 function getUser() {
   const raw = localStorage.getItem('logigo_user');
-  return raw ? JSON.parse(raw) : null;
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    localStorage.removeItem('logigo_user');
+    localStorage.removeItem('logigo_token');
+    return null;
+  }
 }
 
 function saveSession(token, user) {
