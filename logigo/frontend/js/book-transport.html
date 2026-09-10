@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Transport | LogiGo</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🚚 LogiGo</div>
+  <nav>
+    <a href="customer-dashboard.html">Dashboard</a>
+    <a href="book-transport.html">Book Transport</a>
+    <a href="my-bookings.html">My Bookings</a>
+    <a href="#" id="logoutLink">Logout</a>
+  </nav>
+</div>
+
+<div class="container" style="max-width: 640px;">
+  <div class="card">
+    <h2>Book a Transport</h2>
+
+    <form id="bookingForm" class="mt-24">
+      <h3>Pickup Location</h3>
+      <button type="button" id="gpsBtn" class="btn btn-outline btn-sm mt-16">📍 Use My Current Location</button>
+      <p id="gpsStatus" class="muted" style="font-size:12px;"></p>
+
+      <div class="grid grid-2 mt-16">
+        <div class="form-group">
+          <label>Street / House No.</label>
+          <input type="text" id="pickup_street" placeholder="e.g. Flat 302, MG Road" required>
+        </div>
+        <div class="form-group">
+          <label>Landmark (optional)</label>
+          <input type="text" id="pickup_landmark" placeholder="e.g. Near City Mall">
+        </div>
+        <div class="form-group">
+          <label>Area / Locality</label>
+          <input type="text" id="pickup_area" placeholder="e.g. Kothrud" required>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="pickup_city" placeholder="e.g. Pune" required>
+        </div>
+        <div class="form-group">
+          <label>District</label>
+          <input type="text" id="pickup_district" placeholder="e.g. Pune">
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" id="pickup_state" placeholder="e.g. Maharashtra" required>
+        </div>
+      </div>
+
+      <h3 class="mt-24">Delivery Location</h3>
+      <div class="grid grid-2 mt-16">
+        <div class="form-group">
+          <label>Street / House No.</label>
+          <input type="text" id="delivery_street" placeholder="e.g. Plot 12, Hinjewadi Phase 2" required>
+        </div>
+        <div class="form-group">
+          <label>Landmark (optional)</label>
+          <input type="text" id="delivery_landmark" placeholder="e.g. Near Tech Park">
+        </div>
+        <div class="form-group">
+          <label>Area / Locality</label>
+          <input type="text" id="delivery_area" placeholder="e.g. Hinjewadi" required>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="delivery_city" placeholder="e.g. Pune" required>
+        </div>
+        <div class="form-group">
+          <label>District</label>
+          <input type="text" id="delivery_district" placeholder="e.g. Pune">
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" id="delivery_state" placeholder="e.g. Maharashtra" required>
+        </div>
+      </div>
+
+      <button type="button" id="calcDistanceBtn" class="btn btn-outline btn-block mt-16">📏 Calculate Distance</button>
+      <p id="distanceResult" class="mt-16" style="display:none;">
+        Estimated distance: <strong id="distanceValue">0</strong> km
+      </p>
+      <input type="hidden" id="distance_km">
+      <input type="hidden" id="pickup_lat">
+      <input type="hidden" id="pickup_lng">
+      <input type="hidden" id="delivery_lat">
+      <input type="hidden" id="delivery_lng">
+
+      <div class="form-group mt-24">
+        <label>Vehicle Type</label>
+        <select id="vehicle_type" required>
+          <option value="mini_truck">Mini Truck</option>
+          <option value="pickup_van">Pickup Van</option>
+          <option value="large_truck">Large Truck</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Goods Description</label>
+        <input type="text" id="goods_description" placeholder="e.g. Household furniture" required>
+      </div>
+
+      <div class="form-group">
+        <label>Goods Weight (kg)</label>
+        <input type="number" id="goods_weight_kg" min="1" step="0.1" required>
+      </div>
+
+      <button type="button" id="estimateBtn" class="btn btn-outline btn-block" disabled>Get Estimated Price (calculate distance first)</button>
+
+      <div id="estimateResult" class="mt-16" style="display:none;">
+        <div class="card stat-card">
+          <div class="value" id="estimatedPrice">₹0</div>
+          <div class="label">Estimated Price</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block mt-16">Confirm Booking</button>
+      <p id="errorMsg" class="error-text"></p>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/geocode.js"></script>
+<script src="js/booking.js"></script>
+</body>
+</html>
