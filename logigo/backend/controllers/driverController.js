@@ -6,7 +6,7 @@ async function getProfile(req, res) {
     const driverId = req.user.id;
 
     const [[driver]] = await pool.query(
-      `SELECT id, name, email, phone, license_number, vehicle_type, vehicle_number, status, approval_status, created_at
+      `SELECT id, name, email, phone, license_number, vehicle_type, vehicle_number, status, approval_status, profile_photo, created_at
        FROM drivers WHERE id = ?`,
       [driverId]
     );
@@ -41,19 +41,26 @@ async function getProfile(req, res) {
   }
 }
 
-// PUT /api/driver/profile -- edit name, phone, vehicle_number (not email/password/license here)
+// PUT /api/driver/profile -- edit name, phone, vehicle_number, profile photo (not email/password/license here)
 async function updateProfile(req, res) {
   try {
-    const { name, phone, vehicle_number } = req.body;
+    const { name, phone, vehicle_number, profile_photo } = req.body;
     if (!name) return res.status(400).json({ message: 'Name is required' });
 
-    await pool.query(
-      'UPDATE drivers SET name = ?, phone = ?, vehicle_number = ? WHERE id = ?',
-      [name, phone || null, vehicle_number || null, req.user.id]
-    );
+    if (profile_photo !== undefined) {
+      await pool.query(
+        'UPDATE drivers SET name = ?, phone = ?, vehicle_number = ?, profile_photo = ? WHERE id = ?',
+        [name, phone || null, vehicle_number || null, profile_photo, req.user.id]
+      );
+    } else {
+      await pool.query(
+        'UPDATE drivers SET name = ?, phone = ?, vehicle_number = ? WHERE id = ?',
+        [name, phone || null, vehicle_number || null, req.user.id]
+      );
+    }
 
     const [[driver]] = await pool.query(
-      `SELECT id, name, email, phone, license_number, vehicle_type, vehicle_number, status, approval_status, created_at
+      `SELECT id, name, email, phone, license_number, vehicle_type, vehicle_number, status, approval_status, profile_photo, created_at
        FROM drivers WHERE id = ?`,
       [req.user.id]
     );
