@@ -72,6 +72,20 @@ async function getDrivers(req, res) {
   }
 }
 
+// DELETE /api/admin/drivers/:id -- their past bookings stay, just become unassigned
+async function deleteDriver(req, res) {
+  try {
+    const [rows] = await pool.query('SELECT id FROM drivers WHERE id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ message: 'Driver not found' });
+
+    await pool.query('DELETE FROM drivers WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Driver deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error deleting driver' });
+  }
+}
+
 // GET /api/admin/drivers/pending -- drivers waiting for approval
 async function getPendingDrivers(req, res) {
   try {
@@ -127,6 +141,7 @@ async function assignDriver(req, res) {
 
     const [bookingRows] = await pool.query('SELECT * FROM bookings WHERE id = ?', [req.params.id]);
     if (bookingRows.length === 0) return res.status(404).json({ message: 'Booking not found' });
+    const booking = bookingRows[0];
 
     const [driverRows] = await pool.query(
       `SELECT * FROM drivers WHERE id = ? AND status = 'available'`,
@@ -134,6 +149,15 @@ async function assignDriver(req, res) {
     );
     if (driverRows.length === 0) {
       return res.status(400).json({ message: 'Driver not found or not available' });
+    }
+
+    // Safety net: never assign a driver whose vehicle type doesn't match
+    // what the customer asked for, even if the request came from somewhere
+    // other than the normal dropdown (which already filters this).
+    if (driverRows[0].vehicle_type !== booking.vehicle_type) {
+      return res.status(400).json({
+        message: `Vehicle type mismatch: booking needs '${booking.vehicle_type}', this driver has '${driverRows[0].vehicle_type}'`
+      });
     }
 
     await pool.query('UPDATE bookings SET driver_id = ?, status = "assigned" WHERE id = ?', [
@@ -187,6 +211,7 @@ module.exports = {
   getCustomers,
   deleteCustomer,
   getDrivers,
+  deleteDriver,
   getPendingDrivers,
   approveDriver,
   getAllBookings,
