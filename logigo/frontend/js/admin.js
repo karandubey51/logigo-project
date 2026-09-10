@@ -70,8 +70,9 @@ async function loadBookings() {
               ${b.status === 'pending' ? `
                 <select id="driverSelect-${b.id}" style="width:auto; display:inline-block;">
                   <option value="">Assign driver...</option>
-                  ${availableDrivers.map(d => `<option value="${d.id}">${d.name} (${d.vehicle_type.replace('_',' ')})</option>`).join('')}
+                  ${availableDrivers.filter(d => d.vehicle_type === b.vehicle_type).map(d => `<option value="${d.id}">${d.name} (${d.vehicle_type.replace('_',' ')})</option>`).join('')}
                 </select>
+                ${availableDrivers.filter(d => d.vehicle_type === b.vehicle_type).length === 0 ? `<p class="muted" style="font-size:12px; margin:4px 0;">No available ${b.vehicle_type.replace('_',' ')} drivers right now</p>` : ''}
                 <button class="btn btn-primary btn-sm" onclick="assignDriver(${b.id})">Assign</button>
               ` : ''}
               <select id="statusSelect-${b.id}" style="width:auto; display:inline-block; margin-top:6px;">
@@ -120,14 +121,28 @@ async function loadDrivers() {
   const panel = document.getElementById('driversTab');
   panel.innerHTML = `
     <table>
-      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Vehicle</th><th>Status</th><th>Approval</th></tr></thead>
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Vehicle</th><th>Status</th><th>Approval</th><th>Actions</th></tr></thead>
       <tbody>
         ${data.drivers.map(d => `
-          <tr><td>#${d.id}</td><td>${d.name}</td><td>${d.email}</td><td>${d.vehicle_type.replace('_',' ')}</td><td>${d.status}</td><td>${d.approval_status}</td></tr>
+          <tr>
+            <td>#${d.id}</td><td>${d.name}</td><td>${d.email}</td><td>${d.vehicle_type.replace('_',' ')}</td><td>${d.status}</td><td>${d.approval_status}</td>
+            <td><button class="btn btn-outline btn-sm" onclick="deleteDriverRow(${d.id})">Delete</button></td>
+          </tr>
         `).join('')}
       </tbody>
     </table>
   `;
+}
+
+async function deleteDriverRow(driverId) {
+  if (!confirm('Delete this driver? Their past bookings will stay but become unassigned. This cannot be undone.')) return;
+  try {
+    await apiRequest(`/admin/drivers/${driverId}`, { method: 'DELETE' });
+    loadDrivers();
+    loadDashboard();
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 async function loadPendingDrivers() {
