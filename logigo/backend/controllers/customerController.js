@@ -7,7 +7,7 @@ async function getProfile(req, res) {
     const customerId = req.user.id;
 
     const [[customer]] = await pool.query(
-      'SELECT id, name, email, phone, address, created_at FROM customers WHERE id = ?',
+      'SELECT id, name, email, phone, address, profile_photo, created_at FROM customers WHERE id = ?',
       [customerId]
     );
     if (!customer) return res.status(404).json({ message: 'Customer not found' });
@@ -24,19 +24,26 @@ async function getProfile(req, res) {
   }
 }
 
-// PUT /api/customer/profile -- edit name, phone, address (not email/password here)
+// PUT /api/customer/profile -- edit name, phone, address, profile photo (not email/password here)
 async function updateProfile(req, res) {
   try {
-    const { name, phone, address } = req.body;
+    const { name, phone, address, profile_photo } = req.body;
     if (!name) return res.status(400).json({ message: 'Name is required' });
 
-    await pool.query(
-      'UPDATE customers SET name = ?, phone = ?, address = ? WHERE id = ?',
-      [name, phone || null, address || null, req.user.id]
-    );
+    if (profile_photo !== undefined) {
+      await pool.query(
+        'UPDATE customers SET name = ?, phone = ?, address = ?, profile_photo = ? WHERE id = ?',
+        [name, phone || null, address || null, profile_photo, req.user.id]
+      );
+    } else {
+      await pool.query(
+        'UPDATE customers SET name = ?, phone = ?, address = ? WHERE id = ?',
+        [name, phone || null, address || null, req.user.id]
+      );
+    }
 
     const [[customer]] = await pool.query(
-      'SELECT id, name, email, phone, address, created_at FROM customers WHERE id = ?',
+      'SELECT id, name, email, phone, address, profile_photo, created_at FROM customers WHERE id = ?',
       [req.user.id]
     );
     res.json({ message: 'Profile updated successfully', profile: customer });
@@ -180,6 +187,10 @@ async function createBooking(req, res) {
       pickup_location,
       delivery_location,
       distance_km,
+      pickup_lat,
+      pickup_lng,
+      delivery_lat,
+      delivery_lng,
       vehicle_type,
       goods_description,
       goods_weight_kg
@@ -197,9 +208,11 @@ async function createBooking(req, res) {
 
     const [result] = await pool.query(
       `INSERT INTO bookings
-        (customer_id, pickup_location, delivery_location, distance_km, vehicle_type, goods_description, goods_weight_kg, estimated_price, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')`,
-      [customerId, pickup_location, delivery_location, distance_km || null, vehicle_type, goods_description, goods_weight_kg, estimatedPrice]
+        (customer_id, pickup_location, delivery_location, distance_km, pickup_lat, pickup_lng, delivery_lat, delivery_lng, vehicle_type, goods_description, goods_weight_kg, estimated_price, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`,
+      [customerId, pickup_location, delivery_location, distance_km || null,
+       pickup_lat || null, pickup_lng || null, delivery_lat || null, delivery_lng || null,
+       vehicle_type, goods_description, goods_weight_kg, estimatedPrice]
     );
 
     await pool.query(
